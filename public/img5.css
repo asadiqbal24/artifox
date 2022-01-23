@@ -1,0 +1,220 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap');
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  font-size: 62.5%;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+}
+/* Utitility Classes */
+.h1-white-font {
+    font-size: 3rem;
+    color: white;
+    letter-spacing: .1rem;
+    word-spacing: .3rem;
+}
+.h1-red-font {
+    font-size: 3rem;
+    color: red;
+    letter-spacing: .1rem;
+    word-spacing: .3rem;
+}
+.h1-grey-font {
+    font-size: 2.5rem;
+    color: #474747;
+    letter-spacing: .1rem;
+    word-spacing: .3rem;
+    text-align: center;
+}
+.small-button {
+    font-size: 1.3rem;
+    background-color: #f6921e;
+    color: white;
+    padding: .4rem 1.7rem;
+    border-radius: 1.5rem;
+    border: .1rem solid #f6921e;
+    outline: none;
+    cursor: pointer;
+}
+.h3-yellow-font {
+    font-size: 2rem;
+    color: #f6921e;
+}
+.p-black-font {
+    color: black;
+    font-size: 1.3rem;
+    
+}
+.p-red-font {
+    color: red;
+    font-size: 1.3rem;
+}
+
+
+
+/* Navbar */
+.navbar {
+    width: 100%;
+    height: 8rem;
+    background-color: black;
+}
+.nav-container {
+    /* border: 2px solid yellow; */
+    width: 80%;
+    height: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.nav-items {
+    /* border: 7px solid brown; */
+    height: 100%;
+    display: grid;
+    place-items: center;
+}
+.nav-logo {
+    width: 20rem;
+    height: auto;
+    /* border: 2px solid red; */
+}
+input[placeholder="Search"] {
+    width: 27rem;
+    font-size: 1.2rem;
+    padding: .6rem 3rem;
+    border-radius: 2rem;
+    border: .1rem solid black;
+    outline: none;
+}
+input#search {
+    background-image: url("./assts/Icon\ feather-search.png");
+    background-repeat: no-repeat;
+    background-size: 1.5rem;
+    background-position: right;
+    background-position: 24rem;
+}
+
+/* Section */
+.section-container {
+    /* border: 2px solid red; */
+    width: 80%;
+    margin: auto;
+}
+.section-items {
+    width: 100%;
+    /* border: 2px solid black; */
+    padding: 1.4rem 0;
+    /* height: 44rem; */
+}
+.section-end {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+}
+.section-buttons {
+    /* border: 2px solid brown; */
+    margin-inline-start: 1rem;
+}
+.section-content {
+    width: 90%;
+    /* border: 2px solid red; */
+    height: 44rem;
+    display: flex;
+    flex-direction: row;
+}
+.section-content1 {
+    border: .2rem solid #c7c7c7;
+    width: 100%;
+    border-radius: 2rem;
+    display: grid;
+    place-items: center;
+    background-color: #f2f2f2;
+}
+.section-content1-img {
+    width: 30rem;
+    height: auto;
+}
+.section-content2 {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+.section-content2-container1 {
+    /* border: 2px solid rgb(0, 0, 0); */
+    display: grid;
+    place-items: center;
+    padding: 4rem 0;
+}
+.section-content2-container2 {
+    /* border: 2px solid rgb(0, 0, 0); */
+    display: grid;
+    place-items: center;
+    padding: 0 4rem;
+    text-align: center;
+}
+input[value="000000000000000000"] {
+    font-size: 2rem;
+    color: red;
+    text-align: center;
+    width: 30rem;
+    padding: .5rem .9rem;
+    border-radius: 2rem;
+    border: .2rem solid #c7c7c7;
+    outline:  none;
+}
+
+@media (max-width: 2560px) and (min-width: 768px) {
+    html {
+      font-size: calc(7px + (20 - 7) * ((100vw - 768px) / (2560 - 768)));
+    }
+  }
+@media (max-width: 768px) and (min-width: 320px) {
+    html {
+      font-size: calc(8px + (11 - 8) * ((100vw - 320px) / (768 - 320)));
+    }
+    .nav-container {
+        width: 90%;
+
+    }
+    .nav-center-item {
+        display: none;
+    }
+    input#search {
+    background-position: 14rem;
+
+    }
+    input[placeholder="Search"] {
+        width: 17rem;
+    }
+    .section-container {
+        width: 90%;
+    }
+    .section-content {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+    }
+    .section-content1 {
+        width: 100%;
+        height: 40rem;
+    }
+    .section-content1-img {
+        width: 30rem;
+    }
+    .section-content2 {
+        width: 100%;
+        padding: 0 0 3rem 0;
+    }
+    input[value="000000000000000000"] {
+        margin: 2rem 0;
+
+    }
+  }

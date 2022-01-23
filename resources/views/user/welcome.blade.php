@@ -568,6 +568,19 @@
 		</div>
 		
 	</section>
+	<section class="mt-3 mb-3">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<a href="{{route('final-design')}}" class="btn btn-primary" style="background-color: #f98600;border-color: #f98600;float: right;    border-radius: 20px;
+    padding: 5px 30px;">Next</a>
+				</div>
+				
+			</div>
+			
+		</div>
+		
+	</section>
 	
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 	<!-- 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script> -->

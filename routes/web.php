@@ -33,6 +33,12 @@ Route::get('welcome', [HomeController::class, 'welcome'])->name('welcome');
 
 Route::get('searchIcons', [HomeController::class, 'searchIcons'])->name('searchIcons');
 
+Route::get('final-design', [HomeController::class, 'final_design'])->name('final-design');
+
+
+Route::get('final-design-ready', [HomeController::class, 'final_design_ready'])->name('final-design-ready');
+
+
 
 
 Route::group(['prefix' => 'admin',  'middleware' => ['can:admin']], function()

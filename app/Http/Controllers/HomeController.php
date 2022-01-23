@@ -30,4 +30,17 @@ class HomeController extends Controller
         return $x;
     }
 
+
+    public function final_design()
+    {
+        return view('user.final_design');
+    }
+
+    public function final_design_ready()
+    {
+        $randnum = rand(11111111,99999999);
+        return view('user.final_design_ready',compact('randnum'));
+    }
+
+
 }

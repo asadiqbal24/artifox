@@ -20,7 +20,7 @@
                 <h1 class="h1-grey-font">Get Started</h1>
                 <p class="p-grey-font">Please Enter The Product ID Number To Get Started On Your Design</p>
                 <input class="small-grey-font" id="Enter" type="text" placeholder="Product Identifier ID">
-                <button class="btn-style btn-white-font btn-background">Start Designing</button>
+                <a class="btn-style btn-white-font btn-background" href="{{route('welcome')}}" style="text-decoration: none; text-align: center;">Start Designing</a>
             </div>
         </div>
     </div>
