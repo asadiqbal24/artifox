@@ -31,6 +31,8 @@ Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('welcome', [HomeController::class, 'welcome'])->name('welcome');
 
 
+Route::get('searchIcons', [HomeController::class, 'searchIcons'])->name('searchIcons');
+
 
 
 Route::group(['prefix' => 'admin',  'middleware' => ['can:admin']], function()
