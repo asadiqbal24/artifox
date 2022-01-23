@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap');
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  font-size: 62.5%;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Utitlity Class */
+.h1-white-font {
+    font-size: 3rem;
+    color: white;
+}
+.btn-style {
+    padding: .8rem 0;
+    outline: none;
+    border: .1rem solid #f7931e;
+    border-radius: 2rem;
+    cursor: pointer;
+    width: 100%;
+}
+.btn-white-font {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+}
+.btn-background {
+    background-color: #f7931e;
+}
+.h1-grey-font {
+    font-size: 3rem;
+    color: #474747;
+}
+.p-grey-font {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #474747;
+    text-align: center;
+}
+.small-grey-font {
+    font-size: 1.5rem;
+    color: #474747;
+}
+
+
+.layout {
+    /* border: 2px solid red; */
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    place-items: center;
+    background-color: #ffffff;
+}
+.container {
+    /* border: 12px solid black; */
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+}
+.container-img {
+    /* border: 2px solid blue; */
+    border-top-left-radius: 2rem;
+    border-bottom-left-radius: 2rem;
+    display: grid;
+    place-items: center;
+    width: 50rem;
+    height: 50rem;
+    background-color: black;
+}
+.main-img {
+    /* border: 2px solid white; */
+    width: 100%;
+    height: auto;
+
+}
+.container-text {
+    /* border: 2px solid red; */
+    border-top-right-radius: 2rem;
+    border-bottom-right-radius: 2rem;
+    background-color: #f2f2f2;
+    width: 30rem;
+    display: grid;
+    place-items: center;
+    padding: 8rem 2rem;
+}
+input#Enter {
+    background-image: url(../assts/Icon\ material-fingerprint.png);
+    background-position: 2.5rem;
+    background-repeat: no-repeat;
+    background-size: 2rem;
+    border: .2rem solid #7c7c7c;
+    border-radius: 2rem;
+    outline: none;
+}
+input[placeholder = "Product Identifier ID"] {
+    /* font-size: 1.5rem; */
+    text-align: center;
+    width: 100%;
+    padding: .8rem 0;
+}
+
+
+@media (max-width: 2560px) and (min-width: 768px) {
+    html {
+      font-size: calc(7px + (20 - 7) * ((100vw - 768px) / (2560 - 768)));
+    }
+  }
+
+  
+@media (max-width: 767px) and (min-width: 320px) {
+    html {
+      font-size: calc(7px + (12 - 7) * ((100vw - 320px) / (767 - 320)));
+    }
+    .layout {
+        height: auto;
+        /* border: 2px solid red; */
+        padding: 4rem 0;
+    }
+    .container {
+        width: 80%;
+        flex-direction: column;
+    }
+    .container-img {
+        /* border: 2px solid white; */
+        padding: 2rem 0;
+        border-radius: 2rem;
+        width: 100%;
+        height: auto;
+    }
+    .container-text {
+        border-radius: 2rem;
+        background-color: #f2f2f2;
+        width: 100%;
+        height: 50rem;
+    }
+    .btn-style {
+        width: 30rem;
+    }
+    input[placeholder = "Product Identifier ID"] {
+        width: 30rem;
+        text-align: center;
+
+    }
+  }
+
+ 
