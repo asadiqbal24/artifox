@@ -10,7 +10,8 @@
 		<title>HomePage</title>
 		<link rel="stylesheet" type="text/css" href="{{asset('usercss/canvas_style/styles/fontselect-default.css')}}" />
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-		
+		<meta name="csrf-token" content="{{ csrf_token() }}">
+
 		<style type="text/css">
 			.preLoadedtext{
 				cursor: pointer !important;
@@ -128,6 +129,9 @@
 		.fontTypeList{
 		padding: 5px;
 		}
+		.closeImageButton{
+			height: 18px;border-radius: 30px;background-color: white;color: black;padding-top: 0px;padding-bottom: 0px;padding-left: 2px;padding-right: 2px;font-size: 10px;			
+		}
 		</style>
 	</head>
 	<body>
@@ -174,18 +178,18 @@
 					<div class="col-lg-6 col-md-6 col-sm-12">
 						<div class="row ">
 							<div class="col-lg-4 col-md-4 col-sm-4 first-column-space">
-							<div id="text">
+							<div id="text" style="cursor: pointer;">
 								<img src="{{asset('usercss/images/textorange.png')}}" class="t-width"><label>Text</label>
 							</div>	
 							</div>
 							<div class="col-lg-4 col-md-4 col-sm-4 first-column-space ">
-							<div id="images">
+							<div id="images" style="cursor: pointer;">
 								<img src="{{asset('usercss/images/blackdot.png')}}" class="t-width"><label>Images</label>
 							</div>
 							
 						</div>
 						<div class="col-lg-4 col-md-4 col-sm-4 first-column-space ">
-							<div id="more">
+							<div id="more" style="cursor: pointer;">
 								<img src="{{asset('usercss/images/blackcircle.png')}}" class="t-width"><label>More</label>
 							</div>
 						</div>	
@@ -261,21 +265,23 @@
 								<div class="row">
 									<div class="col-lg-4 col-md-4 text-center">
 										<div class="col-lg-12 file-design">
-											<input type="file" name="picture" class="picture">
+											<input type="file" name="picture" id="uploadImage" style="width:100%" class="picture" accept="image/*" onchange="loadFile(event)">
 										</div>
+
+
 										<label class="mt-1 bottom-label">Computer</label>
 										
 									</div>
 									<div class="col-lg-4 col-md-4 text-center">
 										<div class="col-lg-12 file-design-2">
-											<input type="file" name="picture" class="picture">
+											<input type="file" name="picture" class="picture" accept="image/*" style="width:100%">
 										</div>
 										<label class="mt-1 bottom-label">Phone</label>
 										
 									</div>
 									<div class="col-lg-4 col-md-4 text-center">
-										<div class="col-lg-12 file-design-search">
-											<input type="file" name="picture" class="picture">
+										<div class="col-lg-12 file-design-search iconLibraryToggle" >
+											<input type="button" class="picture" style="width:100%">
 										</div>
 										<label class="mt-1 bottom-label ">Icon Libaray</label>
 									</div>
@@ -285,6 +291,42 @@
 							<div class="col-lg-12 mt-3">
 								<p>Please ensure you have the right to use any image you upload </p>
 							</div>
+
+							<div class="col-lg-12 mt-3">
+
+									<div id="iconEditor" class="col-lg-12" style="margin-top: 15px;background-color: #868383;padding: 5px;border-radius: 10px;display: none;">
+
+											<div class="col-lg-12" style="margin: 0 auto;">
+												<div class="row">
+													<div class="col-md-10"><label>Enter Keyword</label></div>
+													<div class="col-md-2"><button class="closeIconDiv iconLibraryToggle"  style="background: transparent;border: 0px;">
+														<img src="{{asset('icons/closeBtn.png')}}" style="width:50%">
+													</button></div>
+												</div>
+											</div>
+											<div class="col-lg-12" style="margin: 0 auto;margin-top: 5px;">
+												
+												<div class="row">
+													<div class="col-lg-9">
+														<input type="text" name="searchIcon" placeholder="Search Here" class="form-control" id="searchIcon" style="width: 100%;">
+													</div>
+													<div class="col-lg-3">
+														<button class="btn btn-default" id="searchIconBtn" style="background-color: white;">Search</button>
+													</div>
+												</div>
+																				
+											</div>		
+
+											<div class="col-lg-12" style="margin: 0 auto;margin-top: 5px;" id="iconSearchResult">
+
+
+
+											</div>					
+									</div>								
+
+							</div>
+
+
 							<div class="col-lg-12 mt-5">
 								<h5 class="graphic-font-size"><strong>Graphic Design Services</strong></h5>
 							</div>
@@ -306,14 +348,14 @@
 							<div class="col-lg-12">
 								<div class="row">
 									<div class="col-lg-4 col-md-4 text-center">
-										<div class="col-lg-12 file-design-qrcode">
+										<div class="col-lg-12 file-design-qrcode qrToggle" id="qrToggle">
 											<button id="qrcode"></button>
 										</div>
 										<label class="mt-1 bottom-label">Qr Code</label>
 										
 									</div>
 									<div class="col-lg-4 col-md-4 text-center">
-										<div class="col-lg-12 file-design-heart">
+										<div class="col-lg-12 file-design-heart cutOfftoggle" id="cutOfftoggle">
 											<button id="cut-of"></button>
 										</div>
 										<label class="mt-1 bottom-label">Cut-Out</label>
@@ -321,16 +363,92 @@
 									</div>
 									<div class="col-lg-4 col-md-4 text-center">
 										<div class="col-lg-12 file-design-circle">
-											<input type="file" name="picture" class="picture">
+											<input type="file" name="picture" class="picture" style="width:100%">
 										</div>
 										<label class="mt-1 bottom-label">Hole Config</label>
 									</div>
 									
 								</div>
 							</div>
+
+							<div class="col-lg-12 mt-3">
+
+									<div id="qrCodeDiv" class="col-lg-12" style="margin-top: 15px;background-color: #868383;padding: 5px;border-radius: 10px;display: none;">
+
+											<div class="col-lg-12" style="margin: 0 auto;">
+												<div class="row">
+													<div class="col-md-10"><label>Create Your QR Code</label></div>
+													<div class="col-md-2"><button class="closeQRButton" style="background: transparent;border: 0px;">
+														<img src="{{asset('icons/closeBtn.png')}}" style="width:50%">
+													</button></div>
+												</div>
+											</div>
+											<div class="col-lg-12" style="margin: 0 auto;margin-top: 5px;">
+												
+												<div class="row">
+													<div class="col-lg-12">
+														<input type="text" name="qrURL" placeholder="Add URL Here" class="form-control" id="qrURL" style="width: 100%;">
+													</div>
+													<div class="col-lg-12 mt-2">
+														<button class="btn back-to-website-button btn-block" style="color: white !important;" id="addQRBtn"><strong>Add QR code</strong></button>
+													</div>
+												</div>
+																				
+											</div>		
+
+									</div>								
+
+							</div>
+
+
+							<div class="col-lg-12 mt-3">
+
+									<div id="cutShapesDiv" class="col-lg-12" style="margin-top: 15px;background-color: #868383;padding: 5px;border-radius: 10px;display: none;">
+
+											<div class="col-lg-12" style="margin: 0 auto;">
+												<div class="row">
+													<div class="col-md-10"><label>Cut-Out Shapes</label></div>
+													<div class="col-md-2"><button class="closecutShapeButton cutOfftoggle" style="background: transparent;border: 0px;">
+														<img src="{{asset('icons/closeBtn.png')}}" style="width:50%">
+													</button></div>
+												</div>
+											</div>
+											<div class="col-lg-12" style="margin: 0 auto;margin-top: 5px;">
+												
+												<div class="row">
+													
+													<div class="col-lg-2">
+														<img onclick="loadIcon(this)" class="newloadedIcon" src="{{asset('storage/cutShapes/heart1.png')}}" style="width: 60px;height: 60px;">
+													</div>
+
+													<div class="col-lg-2 ml-1" style="margin-left: 15px;">
+														<img onclick="loadIcon(this)" class="newloadedIcon" src="{{asset('storage/cutShapes/heart2.png')}}" style="width: 60px;height: 60px;">
+													</div>	
+
+													<div class="col-lg-2 ml-1" style="margin-left: 15px;">
+														<img onclick="loadIcon(this)" class="newloadedIcon" src="{{asset('storage/cutShapes/heart3.png')}}" style="width: 60px;height: 60px;">
+													</div>	
+
+													<div class="col-lg-2 ml-1" style="margin-left: 15px;">
+														<img onclick="loadIcon(this)" class="newloadedIcon" src="{{asset('storage/cutShapes/heart4.png')}}" style="width: 60px;height: 60px;">
+													</div>	
+
+													<div class="col-lg-2 ml-1" style="margin-left: 15px;">
+														<img onclick="loadIcon(this)" class="newloadedIcon" src="{{asset('storage/cutShapes/square.png')}}" style="width: 60px;height: 60px;">
+													</div>	
+												</div>
+																				
+											</div>		
+									</div>								
+
+							</div>
+
 							<div class="col-lg-12 mt-3">
 								<p>Please ensure you have the right to use any image you upload </p>
 							</div>
+
+														
+
 							<div class="col-lg-12 mt-5">
 								<h5 class="graphic-font-size"><strong>Graphic Design Services</strong></h5>
 							</div>
@@ -403,19 +521,54 @@
 						</div>
 						</center>
 					</div>
+
+					<div id="ImageEditor" class="col-lg-3" style="margin-top: 15px;background-color: #868383;padding: 5px;border-radius: 10px;display: none;">
+							<center>
+							<div class="col-lg-12">
+								<div class="row">
+									<div class="col-md-3" style="margin-left:10px;"><label class="text-white" style="font-size:12px;">Width<small>(px)</small></label></div>
+									<div class="col-md-3" style="margin-left:15px;"><label class="text-white" style="font-size:12px;">Height<small>(px)</small></label></div>
+
+									<div class="col-md-4"><button class="closeImageButton"style="background: transparent;border: 0px;">
+														<img src="{{asset('icons/closeBtn.png')}}" style="width:50%"></div>
+								</div>
+							</div>
+							<div class="col-lg-12" style="margin: 0 auto;margin-top: 10px;">
+									
+								<input type="number" id="imageWidth" value="200" style="width:60px;border-radius:20px;text-align: center;" >		
+								<input type="number" id="imageHeight" value="200" style="width:60px;border-radius:20px;text-align: center;" >
+								<button id="deleteImageElem" class="btn btn-sm btn-default btn-round bg-white" style="border-radius:20px;"><img style="width:15px;" src="{{asset('usercss/images/delete.png')}}"></button>										
+							</div>							
+						</center>
+					</div>
+
+
+					<div id="qrEditor" class="col-lg-3" style="margin-top: 15px;background-color: #868383;padding: 5px;border-radius: 10px;display: none;">
+							<center>
+							<div class="col-lg-12" style="margin: 0 auto;">
+								<div class="row">
+									<div class="col-md-5"><label class="text-white" style="font-size:12px;">Width<small>(px)</small></label></div>
+									<div class="col-md-3"><label class="text-white" style="font-size:12px;">Height<small>(px)</small></label></div>
+									<div class="col-md-2"></div>
+									<div class="col-md-2"><button class="closeQRButton qrToggle">x</button></div>
+								</div>
+							</div>
+							<div class="col-lg-12" style="margin: 0 auto;">
+									
+								<input type="number" id="qrWidth" value="200" style="width:60px;border-radius:20px;text-align: center;" >		
+								<input type="number" id="qrHeight" value="200" style="width:60px;border-radius:20px;text-align: center;" >
+								<button id="qrImageElem" class="btn btn-sm btn-default btn-round bg-white" style="border-radius:20px;"><img style="width:15px;" src="{{asset('usercss/images/delete.png')}}"></button>										
+							</div>							
+						</center>
+					</div>
+
 				</div>
 			</div>
 			
 		</div>
 		
 	</section>
-	<div id="myModal" class="modal">
-		<!-- Modal content -->
-		<div class="modal-content">
-			<span class="close">&times;</span>
-			<p>Some text in the Modal..</p>
-		</div>
-	</div>
+	
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 	<!-- 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script> -->
 	
@@ -423,26 +576,12 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>
 	<script>
 	
-	// Get the modal
-	var modal = document.getElementById("myModal");
-	// Get the button that opens the modal
-	var btn = document.getElementById("qrcode");
-	// Get the <span> element that closes the modal
-			var span = document.getElementsByClassName("close")[0];
-			// When the user clicks the button, open the modal
-			btn.onclick = function() {
-			modal.style.display = "block";
-			}
-			// When the user clicks on <span> (x), close the modal
-					span.onclick = function() {
-					modal.style.display = "none";
-					}
-					// When the user clicks anywhere outside of the modal, close it
-					window.onclick = function(event) {
-					if (event.target == modal) {
-					modal.style.display = "none";
-					}
-					}
+		$.ajaxSetup({
+		    headers: {
+		        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		    }
+		});
+
 			</script>
 			<script type="text/javascript">
 			$(document).ready(function(){
@@ -918,6 +1057,7 @@
 							$('.preLoadedtext').click(function(){
 								var val = $(this).val();
 								$('#divID').append('<span ondblclick="openeditor(this)" class="loadedText loadedlabel-wrapper element ui-widget-content ui-corner-all ui-draggable ui-draggable-handle ui-draggable-dragging dropped" data-item-type="label" id="textData">'+val+'</span>');
+								saveHistory();
 								$(".loadedText").draggable();
 								});
 							var globalSelectedText;
@@ -933,6 +1073,8 @@
 								} else {
 								$(globalSelectedText).css('font-weight','bold');
 								}
+
+								saveHistory();								
 								});
 						$('#italicB').click(function(){
 								if ($(globalSelectedText).css('font-style') == 'italic') {
@@ -940,21 +1082,31 @@
 								} else {
 								$(globalSelectedText).css("font-style", "italic");
 								}
+
+									saveHistory();								
 						});
 						$('#underlineB').click(function(){
 							$(globalSelectedText).css("text-decoration", "underline");
-							});
+								saveHistory();							
+
+						});
 						$('#fontList').change(function(){
 								$(globalSelectedText).css({ 'font-size': $(this).val() });
+														saveHistory();
 						});
 						$('#selectedText').keyup(function(){
 								$(globalSelectedText).html($(this).val());
+								saveHistory();						
 						});
 						$('#deleteElem').click(function(){
 								$(globalSelectedText).remove();
 									$('#selectedText').val('');
-														$('#textEditor').toggle(100);
+								$('#textEditor').toggle(100);
+								saveHistory();								
 						});
+
+
+						
 						$(document).ready(function(){
 							var fontFamily = window.getComputedStyle(document.body,null).getPropertyValue("font-family");
 							if(fontFamily.length > 10){
@@ -962,6 +1114,191 @@
 							}
 							$('#defaultFont').html(fontFamily);
 						})
+
 						</script>
+						
+
+						<script>
+						
+						   var loadFile = function(event) {
+							    var reader = new FileReader();
+							    reader.onload = function(){
+
+							     $('<img />')
+			                        .attr('src', "" + reader.result + "")
+			                        .attr('class','newImageObject loadedlabel-wrapper element ui-widget-content ui-corner-all ui-draggable ui-draggable-handle ui-draggable-dragging dropped') 
+			                         .attr('style','margin:5px;')
+			                         .attr('ondblclick','openImageEditor(this)') 
+			                            .width('200px').height('200px')
+
+			                        .appendTo($('#divID')); 
+			                        $(".newImageObject").draggable();
+									saveHistory();			                        
+								};
+							    reader.readAsDataURL(event.target.files[0]);
+							  };
+							  var globalImage;
+							  function openImageEditor(th) {
+							  	globalImage = th;
+							  	$('#ImageEditor').toggle(100);
+							  }	
+						
+						$("#imageWidth").bind('keyup mouseup', function () {
+							$(globalImage).width($(this).val()+'px');
+								saveHistory();							
+						});
+
+						$("#imageHeight").bind('keyup mouseup', function () {
+							$(globalImage).height($(this).val()+'px');
+								saveHistory();
+						});										
+							
+						$('#deleteImageElem').click(function(){
+								$(globalImage).remove();
+								$('#ImageEditor').toggle(100);
+								saveHistory();
+						});	
+
+						$('.closeImageButton').click(function(){
+
+							$('#ImageEditor').toggle(100);
+
+						});
+
+
+
+						$('#searchIconBtn').click(function(){
+
+							val = $('#searchIcon').val();
+
+								if(val!=''){
+
+									$.ajax({
+						                type:'get',
+						                url:'{{route("searchIcons")}}',
+						                data:{_token: "{{ csrf_token() }}",val,val
+						                },
+						                success: function( msg ) {
+
+						                	$('#iconSearchResult').html(msg);
+
+						                }
+						            });
+
+
+								}
+
+						});
+
+
+						function loadIcon(th){
+
+							  $('<img />')
+			                        .attr('src', "" + $(th).attr('src') + "")
+			                        .attr('class','newImageObject loadedlabel-wrapper element ui-widget-content ui-corner-all ui-draggable ui-draggable-handle ui-draggable-dragging dropped') 
+			                         .attr('style','margin:5px;')
+			                         .attr('ondblclick','openImageEditor(this)') 
+			                            .width('200px').height('200px')
+
+			                        .appendTo($('#divID')); 
+			                        $(".newImageObject").draggable();
+								saveHistory();
+						}
+
+
+						</script>						
+<script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+
+<script type="text/javascript">
+$('#addQRBtn').click(function(){
+
+	var div = document.createElement("div");
+	$(div).addClass('newQRObject loadedlabel-wrapper element ui-widget-content ui-corner-all ui-draggable ui-draggable-handle ui-draggable-dragging dropped');
+	$(div).attr('ondblclick','openQREditor(this)'); 
+	var qrcode = new QRCode(div, {
+		text: $('#qrURL').val(),
+	width: 128,
+	height: 128,
+	colorDark : "black",
+	colorLight : "#ffffff",
+	correctLevel : QRCode.CorrectLevel.H
+});
+
+	$('#divID').append(div);
+	$(".newQRObject").draggable();
+								saveHistory();
+
+});
+
+ var globalQRdiv;
+ var globalQRImage;
+							  function openQREditor(th) {
+							  	globalQRdiv = th;
+							  	globalQRImage = $(th).find('img');
+							  	$('#qrEditor').toggle(100);
+							  }	
+						
+						$("#qrWidth").bind('keyup mouseup', function () {
+							$(globalQRImage).width($(this).val()+'px');
+							saveHistory();
+						});
+
+						$("#qrHeight").bind('keyup mouseup', function () {
+							$(globalQRImage).height($(this).val()+'px');
+							saveHistory();
+						});										
+							
+						$('#deleteImageElem').click(function(){
+								$(globalQRdiv).remove();
+								$('#qrEditor').toggle(100);
+						});	
+
+						$('.qrImageElem').click(function(){
+
+							$('#qrEditor').toggle(100);
+
+						});
+
+
+
+
+$('.iconLibraryToggle').click(function(){
+
+	$('#iconEditor').toggle(100);
+
+});
+
+$('.cutOfftoggle').click(function(){
+
+	$('#cutShapesDiv').toggle(100);
+
+});
+
+$('.qrToggle').click(function(){
+
+	$('#qrCodeDiv').toggle(100);
+
+});
+
+var historyOp = [];
+function undo(){
+
+}
+
+
+function redo(){
+	
+}
+
+
+function saveHistory(){
+	historyOp.push($('#divID').clone());	
+}
+
+
+
+</script>							
+
+
 					</body>
 				</html>
