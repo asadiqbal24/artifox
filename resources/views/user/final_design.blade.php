@@ -40,7 +40,7 @@
             <div class="section-items">
                 <div class="section-content">
                     <div class="section-content1">
-                        <img class="section-content1-img" src="./assts/section-content1-img.png" alt="">
+                        <img class="section-content1-img" style="width:100%" src="{{asset('storage/temp/images/'.\Session::getID().'/'.\Session::getID().'.png')}}" alt="">
                     </div>
                     
                 </div>
@@ -54,14 +54,32 @@
         </div>
 
         <div class="section-items">
-            <input type="checkbox" name="terms" style="margin-right: 15px;"><label style="font-size: 13px;">I Have Looked Over Every Aspect Of This Design and i am approving this design for production</label>
-            
+            <input type="checkbox" name="terms" id="terms" style="margin-right: 15px;"><label style="font-size: 13px;">I Have Looked Over Every Aspect Of This Design and i am approving this design for production</label>
+            <br>
+            <span id="checkbox_error" style="color: red;display: none;">* Select this checkbox</span>
         </div>
         <div class="section-items">
-            <a href="{{route('final-design-ready')}}" class="small-button" style="text-decoration:none;">Approve and Get Code</a>
+            <a href="javascript:void(0)" onclick="terms_checked()" class="small-button" style="text-decoration:none;">Approve and Get Code</a>
         </div>    
         </div>
         
     </section>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        
+
+        function terms_checked() {
+            if($('#terms').prop('checked')){
+              window.location.href = '{{route("final-design-ready")}}';
+            }else{
+                $('#checkbox_error').show();
+            }
+        }
+
+
+    </script>
+
 </body>
 </html>

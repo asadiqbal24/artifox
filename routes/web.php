@@ -39,6 +39,8 @@ Route::get('final-design', [HomeController::class, 'final_design'])->name('final
 Route::get('final-design-ready', [HomeController::class, 'final_design_ready'])->name('final-design-ready');
 
 
+Route::post('save-temp-image', [HomeController::class, 'save_temp_image'])->name('save-temp-image');
+
 
 
 Route::group(['prefix' => 'admin',  'middleware' => ['can:admin']], function()
