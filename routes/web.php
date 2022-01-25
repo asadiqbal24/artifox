@@ -49,4 +49,17 @@ Route::group(['prefix' => 'admin',  'middleware' => ['can:admin']], function()
 Route::get('admin-home', [AdminController::class, 'admin_home'])->name('admin-home');
 
 
+Route::get('design-list', [AdminController::class, 'design_list'])->name('design-list');
+
+
+Route::get('design-approve/{id}/{type}', [AdminController::class, 'design_approve'])->name('design-approve');
+
+
+Route::get('admin-design-delete/{id}', [AdminController::class, 'admin_design_delete'])->name('admin-design-delete');
+
+
+
+
+
+
 });
