@@ -40,7 +40,7 @@
             <div class="section-items section-end">
                 <div class="section-content">
                     <div class="section-content1">
-                        <img class="section-content1-img" src="./assts/section-content1-img.png" alt="">
+                        <img class="section-content1-img" src="{{asset('storage/temp/images/'.\Session::getID().'/'.\Session::getID().'.png')}}" style="width: 100%;" alt="">
                     </div>
                     <div class="section-content2">
                         <div class="section-content2-container1">
@@ -49,7 +49,7 @@
                         </div>
                         <div class="section-content2-container2">
                             <h1 class="h1-grey-font">Your Design Identifier Code Is:</h1>
-                            <input id="zeros-number" type="text" value="{{$randnum}}" style="font-size: 2rem;
+                            <input id="zeros-number" type="text" value="{{\Session::get('identifier')}}" style="font-size: 2rem;
     color: red;
     text-align: center;
     width: 30rem;

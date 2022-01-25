@@ -417,25 +417,15 @@
 												
 												<div class="row">
 													
-													<div class="col-lg-2">
-														<img onclick="loadIcon(this)" class="newloadedIcon" src="{{asset('storage/cutShapes/heart1.png')}}" style="width: 60px;height: 60px;">
+													@foreach($cutShapes as $c)
+
+													<div class="col-lg-2" style="background-color:white;margin: 5px;padding: 5px;">
+														<img onclick="loadIcon(this)" class="newloadedIcon" src="{{asset('storage/'.$c)}}" style="width: 50px;height: 50px;">
 													</div>
 
-													<div class="col-lg-2 ml-1" style="margin-left: 15px;">
-														<img onclick="loadIcon(this)" class="newloadedIcon" src="{{asset('storage/cutShapes/heart2.png')}}" style="width: 60px;height: 60px;">
-													</div>	
 
-													<div class="col-lg-2 ml-1" style="margin-left: 15px;">
-														<img onclick="loadIcon(this)" class="newloadedIcon" src="{{asset('storage/cutShapes/heart3.png')}}" style="width: 60px;height: 60px;">
-													</div>	
+													@endforeach	
 
-													<div class="col-lg-2 ml-1" style="margin-left: 15px;">
-														<img onclick="loadIcon(this)" class="newloadedIcon" src="{{asset('storage/cutShapes/heart4.png')}}" style="width: 60px;height: 60px;">
-													</div>	
-
-													<div class="col-lg-2 ml-1" style="margin-left: 15px;">
-														<img onclick="loadIcon(this)" class="newloadedIcon" src="{{asset('storage/cutShapes/square.png')}}" style="width: 60px;height: 60px;">
-													</div>	
 												</div>
 																				
 											</div>		
@@ -515,7 +505,16 @@
 										</table>
 									</div>
 									<div class="col-md-5">
-									<ul id="fonttList" style="background-color: white;width: 170px;border-radius: 5px;display: inline-block;padding-left: 0px;height: 170px;max-height: 170px;overflow-y: auto;"></ul>
+									<ul id="fonttList" style="background-color: white;width: 170px;border-radius: 5px;display: inline-block;padding-left: 0px;height: 170px;max-height: 170px;overflow-y: auto;overflow-x: hidden;">
+										
+										  <li><font onclick="changeFont('Times New Roman')" style="font-size: 13px;cursor: pointer;" face = "Times New Roman" size = "5">Times New Roman</font></li>
+									      <li><font onclick="changeFont('Verdana')" style="font-size: 13px;cursor: pointer;" face = "Verdana" size = "5">Verdana</font></li>
+									      <li><font onclick="changeFont('Comic sans MS')" style="font-size: 13px;cursor: pointer;" face = "Comic sans MS" size =" 5">Comic Sans MS</font></li>
+									      <li><font onclick="changeFont('WildWest')" style="font-size: 13px;cursor: pointer;" face = "WildWest" size = "5">WildWest</font></li>
+									      <li><font onclick="changeFont('Bedrock')" style="font-size: 13px;cursor: pointer;" face = "Bedrock" size = "5">Bedrock</font></li>
+
+									</ul>
+
 								</div>
 							</div>
 						</div>
@@ -530,7 +529,9 @@
 									<div class="col-md-3" style="margin-left:15px;"><label class="text-white" style="font-size:12px;">Height<small>(px)</small></label></div>
 
 									<div class="col-md-4"><button class="closeImageButton"style="background: transparent;border: 0px;">
-														<img src="{{asset('icons/closeBtn.png')}}" style="width:50%"></div>
+														<img src="{{asset('icons/closeBtn.png')}}" style="width:50%">
+													</button>
+													</div>
 								</div>
 							</div>
 							<div class="col-lg-12" style="margin: 0 auto;margin-top: 10px;">
@@ -550,7 +551,7 @@
 									<div class="col-md-5"><label class="text-white" style="font-size:12px;">Width<small>(px)</small></label></div>
 									<div class="col-md-3"><label class="text-white" style="font-size:12px;">Height<small>(px)</small></label></div>
 									<div class="col-md-2"></div>
-									<div class="col-md-2"><button class="closeQRButton qrToggle">x</button></div>
+									<div class="col-md-2"><button class="closeQRButton qrToggle"><img src="{{asset('icons/closeBtn.png')}}" style="width:50%"></button></div>
 								</div>
 							</div>
 							<div class="col-lg-12" style="margin: 0 auto;">
@@ -572,7 +573,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
-					<a href="{{route('final-design')}}" class="btn btn-primary" style="background-color: #f98600;border-color: #f98600;float: right;    border-radius: 20px;
+					<a id="saveDesign" class="btn btn-primary" style="background-color: #f98600;border-color: #f98600;float: right;    border-radius: 20px;
     padding: 5px 30px;">Next</a>
 				</div>
 				
@@ -652,244 +653,8 @@
 			</script>
 			<script src="{{asset('usercss/canvas_style/jquery.fontselect.js')}}"></script>
 			<script>
-			$(function(){
-			/*        $('#font').fontselect();*/
-					var fonts = [
-			"Aclonica",
-			"Allan",
-			"Annie+Use+Your+Telescope",
-			"Anonymous+Pro",
-			"Allerta+Stencil",
-			"Allerta",
-			"Amaranth",
-			"Anton",
-			"Architects+Daughter",
-			"Arimo",
-			"Artifika",
-			"Arvo",
-			"Asset",
-			"Astloch",
-			"Bangers",
-			"Bentham",
-			"Bevan",
-			"Bigshot+One",
-			"Bowlby+One",
-			"Bowlby+One+SC",
-			"Brawler",
-			"Buda:300",
-			"Cabin",
-			"Calligraffitti",
-			"Candal",
-			"Cantarell",
-			"Cardo",
-			"Carter One",
-			"Caudex",
-			"Cedarville+Cursive",
-			"Cherry+Cream+Soda",
-			"Chewy",
-			"Coda",
-			"Coming+Soon",
-			"Copse",
-			"Corben:700",
-			"Cousine",
-			"Covered+By+Your+Grace",
-			"Crafty+Girls",
-			"Crimson+Text",
-			"Crushed",
-			"Cuprum",
-			"Damion",
-			"Dancing+Script",
-			"Dawning+of+a+New+Day",
-			"Didact+Gothic",
-			"Droid+Sans",
-			"Droid+Sans+Mono",
-			"Droid+Serif",
-			"EB+Garamond",
-			"Expletus+Sans",
-			"Fontdiner+Swanky",
-			"Forum",
-			"Francois+One",
-			"Geo",
-			"Give+You+Glory",
-			"Goblin+One",
-			"Goudy+Bookletter+1911",
-			"Gravitas+One",
-			"Gruppo",
-			"Hammersmith+One",
-			"Holtwood+One+SC",
-			"Homemade+Apple",
-			"Inconsolata",
-			"Indie+Flower",
-			"IM+Fell+DW+Pica",
-			"IM+Fell+DW+Pica+SC",
-			"IM+Fell+Double+Pica",
-			"IM+Fell+Double+Pica+SC",
-			"IM+Fell+English",
-			"IM+Fell+English+SC",
-			"IM+Fell+French+Canon",
-			"IM+Fell+French+Canon+SC",
-			"IM+Fell+Great+Primer",
-			"IM+Fell+Great+Primer+SC",
-			"Irish+Grover",
-			"Irish+Growler",
-			"Istok+Web",
-			"Josefin+Sans",
-			"Josefin+Slab",
-			"Judson",
-			"Jura",
-			"Jura:500",
-			"Jura:600",
-			"Just+Another+Hand",
-			"Just+Me+Again+Down+Here",
-			"Kameron",
-			"Kenia",
-			"Kranky",
-			"Kreon",
-			"Kristi",
-			"La+Belle+Aurore",
-			"Lato:100",
-			"Lato:100italic",
-			"Lato:300",
-			"Lato",
-			"Lato:bold",
-			"Lato:900",
-			"League+Script",
-			"Lekton",
-			"Limelight",
-			"Lobster",
-			"Lobster Two",
-			"Lora",
-			"Love+Ya+Like+A+Sister",
-			"Loved+by+the+King",
-			"Luckiest+Guy",
-			"Maiden+Orange",
-			"Mako",
-			"Maven+Pro",
-			"Maven+Pro:500",
-			"Maven+Pro:700",
-			"Maven+Pro:900",
-			"Meddon",
-			"MedievalSharp",
-			"Megrim",
-			"Merriweather",
-			"Metrophobic",
-			"Michroma",
-			"Miltonian Tattoo",
-			"Miltonian",
-			"Modern Antiqua",
-			"Monofett",
-			"Molengo",
-			"Mountains of Christmas",
-			"Muli:300",
-			"Muli",
-			"Neucha",
-			"Neuton",
-			"News+Cycle",
-			"Nixie+One",
-			"Nobile",
-			"Nova+Cut",
-			"Nova+Flat",
-			"Nova+Mono",
-			"Nova+Oval",
-			"Nova+Round",
-			"Nova+Script",
-			"Nova+Slim",
-			"Nova+Square",
-			"Nunito:light",
-			"Nunito",
-			"OFL+Sorts+Mill+Goudy+TT",
-			"Old+Standard+TT",
-			"Open+Sans:300",
-			"Open+Sans",
-			"Open+Sans:600",
-			"Open+Sans:800",
-			"Open+Sans+Condensed:300",
-			"Orbitron",
-			"Orbitron:500",
-			"Orbitron:700",
-			"Orbitron:900",
-			"Oswald",
-			"Over+the+Rainbow",
-			"Reenie+Beanie",
-			"Pacifico",
-			"Patrick+Hand",
-			"Paytone+One",
-			"Permanent+Marker",
-			"Philosopher",
-			"Play",
-			"Playfair+Display",
-			"Podkova",
-			"PT+Sans",
-			"PT+Sans+Narrow",
-			"PT+Sans+Narrow:regular,bold",
-			"PT+Serif",
-			"PT+Serif Caption",
-			"Puritan",
-			"Quattrocento",
-			"Quattrocento+Sans",
-			"Radley",
-			"Raleway:100",
-			"Redressed",
-			"Rock+Salt",
-			"Rokkitt",
-			"Ruslan+Display",
-			"Schoolbell",
-			"Shadows+Into+Light",
-			"Shanti",
-			"Sigmar+One",
-			"Six+Caps",
-			"Slackey",
-			"Smythe",
-			"Sniglet:800",
-			"Special+Elite",
-			"Stardos+Stencil",
-			"Sue+Ellen+Francisco",
-			"Sunshiney",
-			"Swanky+and+Moo+Moo",
-			"Syncopate",
-			"Tangerine",
-			"Tenor+Sans",
-			"Terminal+Dosis+Light",
-			"The+Girl+Next+Door",
-			"Tinos",
-			"Ubuntu",
-			"Ultra",
-			"Unkempt",
-			"UnifrakturCook:bold",
-			"UnifrakturMaguntia",
-			"Varela",
-			"Varela Round",
-			"Vibur",
-			"Vollkorn",
-			"VT323",
-			"Waiting+for+the+Sunrise",
-			"Wallpoet",
-			"Walter+Turncoat",
-			"Wire+One",
-			"Yanone+Kaffeesatz",
-			"Yanone+Kaffeesatz:300",
-			"Yanone+Kaffeesatz:400",
-			"Yanone+Kaffeesatz:700",
-			"Yeseva+One",
-			"Zeyada"
-			];
-			var li = '';
-				for(i=0;i<fonts.length;i++){
-						if(fonts[i].length > 6){
-							fonts[i] = fonts[i].substring(0, 6);
-						}
-					if(i==0){
-						li = '<li style="border: 1px solid;border-radius: 30px;display:inline-block;margin-right: 2px;margin-left: 2px;width:65px;margin-top:5px;">'+fonts[i]+'</li>';
-					}else{
-						li = li + '<li style="border: 1px solid;border-radius: 30px;display:inline-block;margin-right: 2px;margin-left: 2px;width:65px;margin-top:5px;">'+fonts[i]+'</li>';
-					}
-				}
-							$('#fonttList').append(li);
-			});
 				
-			function loadFont(th) {
-					document.getElementById("textData").style.fontFamily = $(th).data('value');
-			}
+
 			
 			</script>
 			<script type="text/javascript">
@@ -1308,6 +1073,40 @@ function saveHistory(){
 	historyOp.push($('#divID').clone());	
 }
 
+function changeFont(val){
+
+	$(globalSelectedText).css('font-family',val);
+
+}
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+
+<script type="text/javascript">
+
+ $(window).load(function(){
+           $('#saveDesign').click(function(){ //calling this function when Save button pressed
+              html2canvas($('#divID')[0], {//give the div id whose image you want in my case this is #cont
+
+              onrendered: function (canvas) {
+              var img = canvas.toDataURL("image/png",8.0);//here set the image extension and now image data is in var img that will send by our ajax call to our api or server site page
+
+
+              $.ajax({
+                    type: 'POST',
+                    url: "{{route('save-temp-image')}}",//path to send this image data to the server site api or file where we will get this data and convert it into a file by base64
+                    data:{
+                      "img":img,
+                      '_token':'{{ csrf_token() }}'
+                    },
+                    success:function(data){
+                    	window.location.href='{{route("final-design")}}'
+                    }
+              });
+              }
+              });
+          });
+        });
 
 
 </script>							

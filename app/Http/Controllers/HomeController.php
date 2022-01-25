@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\UserTempImages;
 class HomeController extends Controller
 {
     public function welcome()
     {
-     return view('user.welcome');
+    $cutShapes = \Storage::disk('public')->allFiles('cutShapes');
+
+     return view('user.welcome',compact('cutShapes'));
     }
     public function get_started()
     {
@@ -38,9 +40,41 @@ class HomeController extends Controller
 
     public function final_design_ready()
     {
-        $randnum = rand(11111111,99999999);
-        return view('user.final_design_ready',compact('randnum'));
+        $random = rand(1111111111,9999999999);
+        if(!\Session::has('identifier')){
+            \Session::put('identifier',$random);            
+        }
+
+        return view('user.final_design_ready',compact('random'));
     }
 
+    public function save_temp_image(Request $request){
+
+            $img = $request->img;//getting post img data
+            $image = str_replace('data:image/png;base64,', '', $img);
+            $image = str_replace(' ', '+', $image);
+            $imageName = \Session::getID().'/'.\Session::getID().'.png';
+
+            $new = UserTempImages::where('session_id',\Session::getID())->first();
+            if(empty($new)){
+                $new  = new UserTempImages();
+            }
+            $new->session_id = \Session::getID();   
+            $new->identifier_code = \Session::get('identifier');   
+            $new->save();
+
+
+            \Storage::disk('local')->put('public/temp/images/'.$imageName, base64_decode($image));            
+    }
+
+        function generateRandomString($length = 0) {
+            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $charactersLength = strlen($characters);
+            $randomString = '';
+            for ($i = 0; $i < $length; $i++) {
+                $randomString .= $characters[rand(0, $charactersLength - 1)];
+            }
+            return $randomString;
+        }
 
 }

@@ -22,7 +22,7 @@
             
             
             <li><a class="nav-link" href=""><i class="far fa-calendar-alt"></i><span>Home</span></a></li>
-            
+            <li><a class="nav-link" href=""><i class="far fa-calendar-alt"></i><span>Designs</span></a></li>            
             
 
             <li><a class="nav-link" href="{{route('logout')}}"><i class="far fa-calendar-alt"></i><span>Logout</span></a></li>
