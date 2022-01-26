@@ -201,11 +201,11 @@
 
 						<div class="row">
 							<div class="col-lg-4 col-md-4 col-sm-4 undo-margin-right">
-							<img src="{{asset('usercss/images/undo.png')}}" class="undo-width"><label>UNDO</label>
+							<button onclick="undo()"><img src="{{asset('usercss/images/undo.png')}}" class="undo-width"><label>UNDO</label></button>
 						</div>
 							<div class="col-lg-4 col-md-4 col-sm-4 undo-margin-right">
-							<img src="{{asset('usercss/images/redo.png')}}" class="redo-width"><label>REDO</label>
-						</div>
+								<button onclick="redo()"><img src="{{asset('usercss/images/redo.png')}}" class="redo-width"><label>REDO</label></button>
+							</div>
 						<div class="col-lg-4 col-md-4 col-sm-4 undo-margin-right">
 							<img src="{{asset('usercss/images/zoom.png')}}" class="zoom-width"><label>ZOOM</label>
 						</div>
@@ -580,7 +580,8 @@
 			</div>
 			
 		</div>
-		
+	
+	<input type="hidden" id="historyIndex" value="0">	
 	</section>
 	
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
@@ -663,7 +664,8 @@
 			$(document).ready(function() {
 			$('.loadedText').draggable({
 			helper: "clone",
-			revert: "invalid"
+			revert: "invalid",
+			containment: "parent" 
 			});
 			
 			$('#divID').droppable({
@@ -735,7 +737,7 @@
 						});
 						a.append(handle, set, rem);
 						a.addClass('dropped').draggable({
-						containment: "#divID"
+						containment: "parent"
 						}).dblclick(function() {
 						// Enabled Resize on element when double clicked
 						var thisEl = $(this).data("item-type");
@@ -836,7 +838,7 @@
 								var val = $(this).val();
 								$('#divID').append('<span ondblclick="openeditor(this)" class="loadedText loadedlabel-wrapper element ui-widget-content ui-corner-all ui-draggable ui-draggable-handle ui-draggable-dragging dropped" data-item-type="label" id="textData">'+val+'</span>');
 								saveHistory();
-								$(".loadedText").draggable();
+								$(".loadedText").draggable({ containment: "parent" });
 								});
 							var globalSelectedText;
 							function openeditor(th){
@@ -910,7 +912,7 @@
 			                            .width('200px').height('200px')
 
 			                        .appendTo($('#divID')); 
-			                        $(".newImageObject").draggable();
+			                        $(".newImageObject").draggable({ containment: "parent" });
 									saveHistory();			                        
 								};
 							    reader.readAsDataURL(event.target.files[0]);
@@ -979,7 +981,7 @@
 			                            .width('200px').height('200px')
 
 			                        .appendTo($('#divID')); 
-			                        $(".newImageObject").draggable();
+			                        $(".newImageObject").draggable({ containment: "parent" });
 								saveHistory();
 						}
 
@@ -1003,7 +1005,7 @@ $('#addQRBtn').click(function(){
 });
 
 	$('#divID').append(div);
-	$(".newQRObject").draggable();
+	$(".newQRObject").draggable({ containment: "parent" });
 								saveHistory();
 
 });
@@ -1029,6 +1031,7 @@ $('#addQRBtn').click(function(){
 						$('#deleteImageElem').click(function(){
 								$(globalQRdiv).remove();
 								$('#qrEditor').toggle(100);
+									saveHistory();
 						});	
 
 						$('.qrImageElem').click(function(){
@@ -1061,17 +1064,39 @@ $('.qrToggle').click(function(){
 var historyOp = [];
 function undo(){
 
+	if($('#historyIndex').val() > 1){
+		console.log(historyOp.length);
+		var undo = historyOp[$('#historyIndex').val() - 2];
+		$('#divID').html(undo);
+	    $(".loadedlabel-wrapper").draggable({ containment: "parent" });
+		$('#historyIndex').val(Number($('#historyIndex').val())-1);    
+	}
+
 }
 
 
 function redo(){
-	
+
+
+		console.log(historyOp.length);
+		var redo = historyOp[$('#historyIndex').val()];
+		$('#divID').html(redo);
+		console.log(redo);
+	    $(".loadedlabel-wrapper").draggable({ containment: "parent" });
+		$('#historyIndex').val(Number($('#historyIndex').val())+1);    
 }
 
 
 function saveHistory(){
-	historyOp.push($('#divID').clone());	
+	historyOp.push($('#divID').html());	
+	$('#historyIndex').val(Number($('#historyIndex').val())+1);
 }
+
+
+ $(document).ready(function(){
+	saveHistory();
+ });
+
 
 function changeFont(val){
 
@@ -1080,17 +1105,20 @@ function changeFont(val){
 }
 </script>
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
-
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.js"></script>
 <script type="text/javascript">
 
  $(window).load(function(){
+
+
+
            $('#saveDesign').click(function(){ //calling this function when Save button pressed
-              html2canvas($('#divID')[0], {//give the div id whose image you want in my case this is #cont
-
+             /* html2canvas($('#divID')[0], {//give the div id whose image you want in my case this is #cont
+              	scale: 5,
               onrendered: function (canvas) {
-              var img = canvas.toDataURL("image/png",8.0);//here set the image extension and now image data is in var img that will send by our ajax call to our api or server site page
 
+              var img = canvas.toDataURL("image/jpeg",1.0);//here set the image extension and now image data is in var img that will send by our ajax call to our api or server site page
 
               $.ajax({
                     type: 'POST',
@@ -1100,11 +1128,36 @@ function changeFont(val){
                       '_token':'{{ csrf_token() }}'
                     },
                     success:function(data){
-                    	window.location.href='{{route("final-design")}}'
+                    	//window.location.href='{{route("final-design")}}'
                     }
               });
               }
-              });
+              },{scale:2});*/
+
+
+
+              domtoimage.toJpeg($('#divID')[0],{ quality: 1 })
+				    .then(function (dataUrl) {
+				        var img = new Image();
+				        img.src = dataUrl;
+				         $.ajax({
+		                    type: 'POST',
+		                    url: "{{route('save-temp-image')}}",//path to send this image data to the server site api or file where we will get this data and convert it into a file by base64
+		                    data:{
+		                      "img":dataUrl,
+		                      '_token':'{{ csrf_token() }}'
+		                    },
+		                    success:function(data){
+		                    	window.location.href='{{route("final-design")}}'
+		                    }
+		              });
+
+
+				    })
+				    .catch(function (error) {
+				        alert('oops, something went wrong!', error);
+				    });
+
           });
         });
 
