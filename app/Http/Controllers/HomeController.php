@@ -51,9 +51,11 @@ class HomeController extends Controller
     public function save_temp_image(Request $request){
 
             $img = $request->img;//getting post img data
-            $image = str_replace('data:image/png;base64,', '', $img);
+
+            $image = str_replace('data:image/jpeg;base64,', '', $img);
             $image = str_replace(' ', '+', $image);
-            $imageName = \Session::getID().'/'.\Session::getID().'.png';
+    
+            $imageName = \Session::getID().'/'.\Session::getID().'.jpeg';
 
             $new = UserTempImages::where('session_id',\Session::getID())->first();
             if(empty($new)){
